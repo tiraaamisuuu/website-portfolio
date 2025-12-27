@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alfie Corthine - Blog</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<canvas id="snow"></canvas>
+
+<div id="scroll-wrapper">
+    <div id="scroll-content">
+        <main>
+
+            <section class="section">
+                <h1>Blog Posts</h1>
+            </section>
+
+            <!-- Blog Post 1 -->
+            <section class="section" id="post-1">
+                <h2>My First Post</h2>
+                <p><small>2025-12-20</small></p>
+                <p>Welcome to my blog! This is the first post where I share my thoughts on projects, tech, and learning. Excited to document my journey!</p>
+            </section>
+
+            <!-- Blog Post 2 -->
+            <section class="section" id="post-2">
+                <h2>Week in Review</h2>
+                <p><small>2025-12-27</small></p>
+                <p>This week I focused on improving my custom Minecraft server firmware and experimenting with Python AI projects. Learned a lot about concurrency and optimization.</p>
+            </section>
+
+            <!-- Blog Post 3 -->
+            <section class="section" id="post-3">
+                <h2>AI Summer School Insights</h2>
+                <p><small>2026-01-03</small></p>
+                <p>I attended the Oxford AI Summer School at St John's College in 2025. Fascinating experience — explored neural networks, reinforcement learning, and hands-on projects.</p>
+            </section>
+
+            <section class="section">
+                <a href="index.html" class="btn">← Back to Portfolio</a>
+            </section>
+
+        </main>
+    </div>
+</div>
+
+<script>
+// Fade-in sections
+const sections = document.querySelectorAll('.section');
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if(entry.isIntersecting){
+            entry.target.classList.add('visible');
+        } else {
+            entry.target.classList.remove('visible');
+        }
+    });
+},{threshold:0.2});
+sections.forEach(sec => observer.observe(sec));
+
+// Snow (same as index.html)
+const canvas = document.getElementById('snow');
+const ctx = canvas.getContext('2d');
+let width = canvas.width = window.innerWidth;
+let height = canvas.height = window.innerHeight;
+
+window.addEventListener('resize', ()=>{
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+});
+
+class Snowflake {
+    constructor(){
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.radius = Math.random() * 3 + 1;
+        this.speed = Math.random() * 1 + 0.5;
+        this.wind = Math.random()*0.5 - 0.25;
+        this.opacity = Math.random()*0.5 + 0.5;
+    }
+    update(){
+        this.y += this.speed;
+        this.x += this.wind;
+        if(this.y>height) this.y=-this.radius;
+        if(this.x>width) this.x=0;
+        if(this.x<0) this.x=width;
+    }
+    draw(){
+        ctx.beginPath();
+        ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);
+        ctx.fillStyle=`rgba(255,255,255,${this.opacity})`;
+        ctx.fill();
+    }
+}
+
+const snowflakes=[];
+for(let i=0;i<250;i++) snowflakes.push(new Snowflake());
+
+function animateSnow(){
+    ctx.clearRect(0,0,width,height);
+    snowflakes.forEach(f=>{
+        f.update();
+        f.draw();
+    });
+    requestAnimationFrame(animateSnow);
+}
+animateSnow();
+</script>
+
+</body>
+</html>

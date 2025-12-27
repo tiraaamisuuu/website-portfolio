@@ -1,85 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alfie Corthine</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alfie Corthine</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header>
-    <nav>
-        <h1 class="logo">Alfie Corthine</h1>
-        <ul>
-            <li><a href="#about">About</a></li>
-            <li><a href="#education">Education</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#socials">Socials</a></li>
-        </ul>
-    </nav>
-</header>
+<canvas id="snow"></canvas>
 
-<main>
+<div id="scroll-wrapper">
+    <div id="scroll-content">
+        <main>
 
-<section id="about">
-    <h2>About Me</h2>
-    <p>
-    I'm a student at Stowe School studing Computer Science, Economics and Engineering. I'm continuing my studies with studying for my Bsc at Royal Holloway University London
-    </p>
-</section>
+            <section class="section">
+                <div class="about-container">
+                    <img src="pfp.jpg" alt="Profile Picture" class="pfp">
+                    <div>
+                        <h1>Hi, I'm Alfie Corthine</h1>
+                        <p>Student, developer, and technology enthusiast exploring AI and building projects. I study Computer Science, Economics, and Engineering at Stowe School, plan to pursue a BSc at Royal Holloway, and eventually a Masters / PhD / DPhil.</p>
+                    </div>
+                </div>
+            </section>
 
-<section id="timeline">
-  <h2>Timeline</h2>
-  <p>I'm going to put a timeline of my education and work experience here</p>
-  </section>
+            <section class="section">
+                <h2>Education & Timeline</h2>
+                <ul>
+                    <li>June 2024: GCSEs Completed</li>
+                    <li>July–Aug 2024: R8ER Internship</li>
+                    <li>June 2025: A Level Predictions</li>
+                    <li>June 2025: Digital Origin Solutions Internship</li>
+                    <li>Summer 2025: Oxford AI Summer School</li>
+                    <li>August 2026: A Level Results</li>
+                    <li>2026–2029: BSc at Royal Holloway</li>
+                    <li>2030–2032?: Masters</li>
+                    <li>2033+: PhD / DPhil</li>
+                </ul>
+            </section>
 
-<section id="education">
-  <h2>Education</h2>
-  <h3>A level</h3>
-  <ul>
-    <li>Computer Science - A*</li>
-    <li>Economics - A</li>
-    <li>Engineering - Distinction*</li>
-  </ul>
-  
-        <h3>GCSE</h3>
-  <ul>
-    <li>Maths</li>
-    <li>English Language</li>
-    <li>English Literature</li>
-    <li>Computer Science</li>
-    <li>Art</li>
-    <li>History</li>
-    <li>Biology</li>
-    <li>Chemistry</li>
-    <li>Physics</li>
-  </ul>
-      </section>
+            <section class="section">
+                <h2>Projects</h2>
+                <ul>
+                    <li>Custom Minecraft server firmware</li>
+                    <li>Learning app for Computer Science coursework</li>
+                    <li>ESP32 WiFi tools & Raspberry Pi tinkering</li>
+                </ul>
+            </section>
 
-<section id="projects">
-    <h2>Projects</h2>
-    <ul>
-        <li>Custom Minecraft server firmware</li>
-        <li>Learning app for Computer Science coursework</li>
-        <li>ESP32 WiFi tools & Raspberry Pi tinkering</li>
-    </ul>
-</section>
+            <section class="section">
+                <h2>Latest Blog Posts</h2>
+                <ul id="latest-posts"></ul>
+                <a href="blogs.html" class="btn">See all posts →</a>
+            </section>
 
-<section id="socials">
-    <h2>Socials</h2>
-    <p>
-        <a href="https://github.com/tiraaamisuuu" target="_blank">GitHub</a>
-        ·
-        <a href="https://www.linkedin.com/authwall?trk=bf&trkInfo=AQGS6kp5f_uqGQAAAZbJ7yhAeiNq6wfaCM5ML0znBGGUBb_-NBhWJ-mSsj5tTM3ygusNHCI4iYTW2EzahOqQKz-A6_P3oNrLY_rP54BW8dyWG8bOR9j0yLb32jcHKpILa0zybS0=&original_referer=&sessionRedirect=https%3A%2F%2Fwww.linkedin.com%2Fin%2Falfred-corthine-aa5851317%3Futm_source%3Dshare%26utm_campaign%3Dshare_via%26utm_content%3Dprofile%26utm_medium%3Dios_app" target="_blank">LinkedIn</a>
-    </p>
-</section>
+            <section class="section">
+                <h2>Connect</h2>
+                <p>
+                    <a href="https://github.com/tiraaamisuuu" target="_blank">GitHub</a> ·
+                    <a href="https://www.linkedin.com/in/alfred-corthine-aa5851317/" target="_blank">LinkedIn</a>
+                </p>
+            </section>
 
-</main>
+        </main>
+    </div>
+</div>
 
-<footer>
-    <p>© 2025 Alfie Corthine</p>
-</footer>
+<script>
+// Fade-in sections
+const sections = document.querySelectorAll('.section');
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if(entry.isIntersecting){
+            entry.target.classList.add('visible');
+        } else {
+            entry.target.classList.remove('visible');
+        }
+    });
+},{threshold:0.2});
+sections.forEach(sec => observer.observe(sec));
+
+// Blog teaser
+const posts=[
+    {id:1,date:"2025-12-20",title:"My First Post"},
+    {id:2,date:"2025-12-27",title:"Week in Review"},
+    {id:3,date:"2026-01-03",title:"AI Summer School Insights"}
+];
+const blogList=document.getElementById('latest-posts');
+posts.forEach(p=>{
+    const li=document.createElement('li');
+    li.innerHTML=`<a href="blogs.html#post-${p.id}">${p.title}</a> <small>${p.date}</small>`;
+    blogList.appendChild(li);
+});
+
+// Snow
+const canvas = document.getElementById('snow');
+const ctx = canvas.getContext('2d');
+let width = canvas.width = window.innerWidth;
+let height = canvas.height = window.innerHeight;
+
+window.addEventListener('resize', ()=>{
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+});
+
+class Snowflake {
+    constructor(){
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.radius = Math.random() * 3 + 1;
+        this.speed = Math.random() * 1 + 0.5;
+        this.wind = Math.random()*0.5 - 0.25;
+        this.opacity = Math.random()*0.5 + 0.5;
+    }
+    update(){
+        this.y += this.speed;
+        this.x += this.wind;
+        if(this.y>height) this.y=-this.radius;
+        if(this.x>width) this.x=0;
+        if(this.x<0) this.x=width;
+    }
+    draw(){
+        ctx.beginPath();
+        ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);
+        ctx.fillStyle=`rgba(255,255,255,${this.opacity})`;
+        ctx.fill();
+    }
+}
+
+const snowflakes=[];
+for(let i=0;i<250;i++) snowflakes.push(new Snowflake());
+
+function animateSnow(){
+    ctx.clearRect(0,0,width,height);
+    snowflakes.forEach(f=>{
+        f.update();
+        f.draw();
+    });
+    requestAnimationFrame(animateSnow);
+}
+animateSnow();
+</script>
 
 </body>
 </html>
